@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    environment:
+      - NODE_ENV=development
+      - APP_ENV=development
+      - PORT=80
+      - DATABASE_URL=postgres://admin:admin@db:5432/fl0-starter-db
+    volumes:
+      - ./src:/usr/src/app/src
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=fl0-starter-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  db-admin:
+    image: dbeaver/cloudbeaver:latest
+    ports:
+      - 8081:8978
+    volumes:
+      - cloudbeaver-data:/opt/cloudbeaver/workspace
+    profiles:
+      - db-admin
+
+volumes:
+  postgres-data:
+  cloudbeaver-data:
