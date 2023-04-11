@@ -14,9 +14,9 @@ import { Todo } from './todo/todo.entity';
       url: process.env.DATABASE_URL,
       entities: [Todo],
       synchronize: process.env.NODE_ENV !== 'production',
-      ssl: {
-        rejectUnauthorized: false
-      }
+      // ssl: {
+      //   rejectUnauthorized: false
+      // }
     }),
     TodoModule,
   ],

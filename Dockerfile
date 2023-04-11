@@ -11,6 +11,8 @@ FROM development as builder
 WORKDIR /usr/src/app
 RUN rm -rf node_modules
 RUN npm ci --only=production
+RUN npm i -g @nestjs/cli @types/node
+RUN npm run build
 EXPOSE 80
 CMD [ "npm", "start" ]
 
