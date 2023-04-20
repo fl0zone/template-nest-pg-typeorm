@@ -11,6 +11,8 @@ FROM development as builder
 WORKDIR /usr/src/app
 RUN rm -rf node_modules
 RUN npm ci --only=production
+RUN npm i -g @nestjs/cli @types/node
+RUN npm run build
 EXPOSE 80
 CMD [ "npm", "start" ]
 
@@ -18,4 +20,4 @@ FROM alpine:latest as production
 RUN apk --no-cache add nodejs ca-certificates
 WORKDIR /root/
 COPY --from=builder /usr/src/app ./
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/main" ]
